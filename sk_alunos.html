@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Alunos</title>
+
+<link href="css/geral.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<?php include_once("topo_interno.php"); ?>
+
+<div class="geral">
+<a href="principal.php" class="tit_menu">Menu</a> > <a href="alunos.php" class="tit_menu">Alunos</a>
+
+<div class="tit"><h2>Alunos</h2></div>
+
+<div class="filtro">Filtro:</div>
+
+<form name="filtro" action="alunos.php" method="get">
+  <input type="text" name="filtro" class="filtro" />
+    
+  <input type="submit" value="Filtrar" />
+</form>
+
+  <br><br>
+      <center>
+      <?php echo $primeira; ?>
+      <?php echo $anterior; ?>
+      <?php echo $pag_ant; ?>
+      <?php echo $pag_atual; ?>
+      <?php echo $pag_prox; ?>
+      <?php echo $proximo; ?>
+      <?php echo $ultima; ?>
+    </center>
+  <br><br>
+    
+<center>
+  <table width="100%" border="0" align="center">
+    <tr>
+      <td><a href="aluno.php?acao=cad"><img src="images/Paginas_07.png" width="203" height="37" border="0" /></a></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  	<tr class="destaque" height="52px">
+        <td width="32%" class="espaco_tit"><div align="left"><strong>Nome</strong></div></td>
+        <td width="32%" class="espaco_tit"><div align="left"><strong>Telefone</strong></div></td>
+        <td width="12%"><div align="center"><strong>Status</strong></div></td>
+        <td width="12%"><div align="center"><strong>Períodos Contrato</strong></div></td>
+        <td width="12%"><div align="center"><strong>Pagamentos</strong></div></td>
+        <td width="12%"><div align="center"><strong>Editar</strong></div></td>
+      </tr>
+      <?php foreach ($dados as $dado) { ?>
+          <tr class="linhas">
+            <td><?php echo $dado->getNome(); ?></td>
+            <td><?php echo $dado->getTelefone(); ?></td>
+            <td><?php if($dado->getStatus() == "1") echo "Desligado"; else echo "Ativo";?></td>
+            <td><div align="center"><a href="datas_aluno.php?aluno=<?php echo $dado->getId(); ?>">Visualizar</a></div></td>
+            <td><div align="center"><a href="pagamentos_aluno.php?aluno=<?php echo $dado->getId(); ?>">Pagamentos</a></div></td>
+            <td><div align="center"><a href="aluno.php?cod=<?php echo $dado->getId(); ?>&acao=edit">Editar</a></div></td>
+          </tr>
+      <?php } ?> 
+        <tr>
+          <td><a href="aluno.php?acao=cad"><img src="images/Paginas_07.png" width="203" height="37" border="0" /></a></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+    </table>
+  </center>
+
+    <div class="limpa"></div>
+    <center>
+      <?php  echo $primeira; ?>
+      <?php  echo $anterior; ?>
+      <?php  echo $pag_ant; ?>
+      <?php  echo $pag_atual; ?>
+      <?php  echo $pag_prox; ?>
+      <?php  echo $proximo; ?>
+      <?php  echo $ultima; ?>
+    </center>
+	
+	<div class="limpa"></div>
+  <?php include_once("rodape.php"); ?>
+  </div>
+</body>
+</html>

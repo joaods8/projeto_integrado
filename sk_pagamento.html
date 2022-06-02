@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Pagamento</title>
+
+<link href="css/geral.css" rel="stylesheet" type="text/css" />
+
+<script src="<?=$PATH_PAI;?>script/jquery-1.4.2.min.js"></script>
+<script src="<?=$PATH_PAI;?>script/mask.jquery.js"></script>
+<script src="<?=$PATH_PAI;?>script/validacao.js"></script>
+<script src="<?=$PATH_PAI;?>script/jquery.maskedinput.min.js"></script>
+<script src="<?=$PATH_PAI;?>script/mascaras.js" type="text/javascript"></script>
+<script src="<?=$PATH_PAI;?>script/jquery.maskMoney.js" type="text/javascript"></script>
+
+<script type="text/javascript">	
+  $(document).ready(function() {
+      AtribuirMascaras();
+  });
+
+  $(function(){
+   $("#valor").maskMoney({symbol:'R$ ', 
+  showSymbol:false, thousands:'.', precision: 2, decimal:',', symbolStay: false, allowNegative: true, allowZero: true});
+   })
+
+	function validarForm(e)
+  {
+	// e.preventDefault();
+	// determina se o form pode ser submetido ou não
+	var canSubmit = true;
+	 
+	// faz uma busca por todos elementos que especificam o atributo req=true
+	$("#formulario [req=true]").each(
+		function(){
+			if($(this).val().length < 1){
+				canSubmit = false;
+				//messages += "<li>" + $(this).attr("label") + " é obrigatório</li>";
+				$(this).css('border-color', '#F00');
+			}
+			else{
+				$(this).css('border-color','gray');
+			}		
+			
+		}
+	);
+	
+		if(canSubmit == true) document.formulario.submit();
+		else e.preventDefault();	
+	}
+</script>
+
+</head>
+
+<body>
+<?php include_once("topo_interno.php"); ?>
+
+<div class="geral">
+
+    <a href="principal.php" class="tit_menu">Menu</a> > <a href="alunos.php" class="tit_menu">Alunos</a> > Pagamentos
+
+<form action="pagamento.php?acao=add&cod=<?php echo $dado->getID(); ?>&aluno=<?php echo $idAluno; ?>" method="post" name="formulario" id="formulario">
+	<br><br>
+    <fieldset>
+    	<legend><b>Dados do Pagamento:</b></legend>
+    <table width="54%" border="0" align="left">
+      <tr>
+        <td>Aluno:</td>
+        <td>
+          <select name="id_aluno" id="id_aluno" req="true" class="input_medio">
+            <option value="<?php echo $idAluno;?>" selected><?php echo $info_aluno->getNome(); ?></option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Data de Vencimento:</td>
+        <td width="80%">
+        <input name="data_vencimento" type="text" class="input campoFormData" id="data_vencimento" value="<?php echo $dado->getDataVencimento(); ?>" maxlength="100" req="true"/>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Valor (R$):</td>
+        <td width="80%">
+        <input name="valor" type="text" class="input" id="valor" value="<?php echo $dado->getValor(); ?>" maxlength="100" req="true"/>
+        </td>
+      </tr>
+      <? if($acao == "edit") { ?>
+        <tr>
+          <td width="20%">Data de Pagamento:</td>
+          <td width="80%">
+          <input name="data_pagamento" type="text" class="input campoFormData" id="data_pagamento" value="<?php echo $dado->getDataPagamento(); ?>" maxlength="100"/>
+          </td>
+        </tr>
+      <? } ?>
+        <tr>
+          <td width="20%">Status:</td>
+          <td width="80%">
+            <select name="status" class="input" req="true">
+                <option value="" SELECTED>Selecione o status</option>
+                  <?php if($dado->getStatus() == 1) { ?>
+                  <option value="1" SELECTED>Em aberto</option>
+                  <option value="2">Pago</option>
+                  <?php } else if($dado->getStatus() == 2) { ?>
+                    <option value="1">Em aberto</option>
+                    <option value="2" SELECTED>Pago</option>
+                  <?php } else { ?> 
+                    <option value="1">Em aberto</option>
+                    <option value="2">Pago</option>
+                  <?php } ?>
+            </select>
+          </td>
+        </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><a href="javascript:validarForm();" name="submit" id="submit"><img src="images/botaosalvar.png" width="101" height="42" border="0" /></a></td>
+      </tr>
+    </table>
+    </fieldset>
+</form>
+
+<?php include_once("rodape.php"); ?>
+  </div>
+</body>
+</html>

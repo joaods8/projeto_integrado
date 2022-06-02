@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Funcionário</title>
+
+<link href="css/geral.css" rel="stylesheet" type="text/css" />
+
+<script src="<?=$PATH_PAI;?>script/jquery-1.4.2.min.js"></script>
+<script src="<?=$PATH_PAI;?>script/mask.jquery.js"></script>
+<script src="<?=$PATH_PAI;?>script/validacao.js"></script>
+<script src="<?=$PATH_PAI;?>script/jquery.maskedinput.min.js"></script>
+<script src="<?=$PATH_PAI;?>script/mascaras.js" type="text/javascript"></script>
+<script src="<?=$PATH_PAI;?>script/jquery.maskMoney.js" type="text/javascript"></script>
+
+<script type="text/javascript">	
+  $(document).ready(function() {
+      AtribuirMascaras();
+  });
+
+	function validarForm(e)
+  {
+	// e.preventDefault();
+	// determina se o form pode ser submetido ou não
+	var canSubmit = true;
+	 
+	// faz uma busca por todos elementos que especificam o atributo req=true
+	$("#formulario [req=true]").each(
+		function(){
+			if($(this).val().length < 1){
+				canSubmit = false;
+				//messages += "<li>" + $(this).attr("label") + " é obrigatório</li>";
+				$(this).css('border-color', '#F00');
+			}
+			else{
+				$(this).css('border-color','gray');
+			}		
+			
+		}
+	);
+	
+		if(canSubmit == true) document.formulario.submit();
+		else e.preventDefault();	
+	}
+</script>
+
+</head>
+
+<body>
+<?php include_once("topo_interno.php"); ?>
+
+<div class="geral">
+
+    <a href="principal.php" class="tit_menu">Menu</a> > <a href="funcionarios.php" class="tit_menu">Funcionários</a> > Funcionário
+
+<form action="funcionario.php?acao=add&cod=<?php echo $dado->getID(); ?>" method="post" name="formulario" id="formulario">
+	<br><br>
+    <fieldset>
+    	<legend><b>Dados do Funcionário:</b></legend>
+    <table width="54%" border="0" align="left">
+      <tr>
+        <td width="20%">Nome:</td>
+        <td width="80%">
+          <input name="nome" type="text" class="input" id="nome" value="<?php  echo $dado->getNome(); ?>" maxlength="100" req="true"/>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Email:</td>
+        <td width="80%">
+        <input name="email" type="text" class="input" id="email" value="<?php  echo $dado->getEmail(); ?>" maxlength="100" req="true"/>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Telefone:</td>
+        <td width="80%">
+        <input name="telefone" type="text" class="input campoFormTelDDD" id="telefone" value="<?php  echo $dado->getTelefone(); ?>" maxlength="100" req="true"/>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Senha:</td>
+        <td width="80%">
+        <input name="senha" type="password" class="input" id="senha" value="" maxlength="100"/>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Data de Contratação:</td>
+        <td width="80%">
+        <input name="data_contratacao" type="text" class="input campoFormData" id="data_contratacao" value="<?php echo $dado->getDataContratacao(); ?>" maxlength="100" req="true"/>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Data de Desligamento:</td>
+        <td width="80%">
+        <input name="data_desligamento" type="text" class="input campoFormData" id="data_desligamento" value="<?php echo $dado->getDataDesligamento(); ?>" maxlength="100"/>
+        </td>
+      </tr>
+        <tr>
+          <td width="20%">Status:</td>
+          <td width="80%">
+            <select name="status" class="input" req="true">
+                <option value="" SELECTED>Selecione o status</option>
+                  <?php if($dado->getStatus() == 1) { ?>
+                  <option value="1" SELECTED>Inativo</option>
+                  <option value="2">Ativo</option>
+                  <?php } else if($dado->getStatus() == 2) { ?>
+                    <option value="1">Inativo</option>
+                    <option value="2" SELECTED>Ativo</option>
+                  <?php } else { ?> 
+                    <option value="1">Inativo</option>
+                    <option value="2">Ativo</option>
+                  <?php } ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Tipo:</td>
+          <td width="80%">
+            <select name="tipo" class="input" req="true">
+                <option value="" SELECTED>Selecione o tipo</option>
+                  <?php if($dado->getTipo() == 'ADM0564') { ?>
+                    <option value="ADM0564" SELECTED>Administrador</option>
+                    <option value="KNT347">Funcionário</option>
+                  <?php } else if($dado->getTipo() == 'KNT347') { ?>
+                    <option value="ADM0564">Administrador</option>
+                    <option value="KNT347" SELECTED>Funcionário</option>
+                  <?php } else { ?> 
+                    <option value="ADM0564">Administrador</option>
+                    <option value="KNT347">Funcionário</option>
+                  <?php } ?>
+            </select>
+          </td>
+        </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><a href="javascript:validarForm();" name="submit" id="submit"><img src="images/botaosalvar.png" width="101" height="42" border="0" /></a></td>
+      </tr>
+    </table>
+    </fieldset>
+</form>
+
+<?php include_once("rodape.php"); ?>
+  </div>
+</body>
+</html>

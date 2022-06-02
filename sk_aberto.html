@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Alunos</title>
+
+<link href="css/geral.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<?php include_once("topo_interno.php"); ?>
+
+<div class="geral">
+<a href="principal.php" class="tit_menu">Menu</a> > <a href="alunos.php" class="tit_menu">Relatórios</a>
+
+<div class="tit"><h2>Pagamentos em Aberto</h2></div>
+    
+<center>
+  <table width="100%" border="0" align="center">
+  	<tr class="destaque" height="52px">
+        <td width="32%" class="espaco_tit"><div align="left"><strong>Nome</strong></div></td>
+        <td width="32%" class="espaco_tit"><div align="left"><strong>Data de Vencimento</strong></div></td>
+        <td width="12%"><div align="center"><strong>Valor</strong></div></td>
+        <td width="12%"><div align="center"><strong>Visualizar</strong></div></td>
+      </tr>
+      <?php foreach($pagamentos as $pagamento) { 
+        $aluno = $objA->listById($pagamento->getIdAluno());
+      ?>
+        <tr class="linhas">
+          <td><?php echo $aluno->getNome(); ?></td>
+          <td><?php echo $pagamento->getDataVencimento(); ?></td>
+          <td>R$ <?php echo $pagamento->getValor(); ?></td>
+          <td><div align="center"><a href="pagamentos_aluno.php?aluno=<?php echo $pagamento->getIdAluno(); ?>">Visualizar</a></div></td>
+        </tr>
+      <?php } ?> 
+    </table>
+  </center>
+	
+	<div class="limpa"></div>
+  <?php include_once("rodape.php"); ?>
+  </div>
+</body>
+</html>

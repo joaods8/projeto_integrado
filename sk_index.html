@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login</title>
+
+<link href="<?=$PATH_PAI; ?>css/geral.css?1422981258" rel="stylesheet" type="text/css" />
+<script src="<?=$PATH_PAI; ?>script/jquery-1.4.2.min.js"></script>
+
+<script type="text/javascript"> 
+    function validarForm(e){
+    // e.preventDefault();
+    // determina se o form pode ser submetido ou não
+    var canSubmit = true;
+     
+    // faz uma busca por todos elementos que especificam o atributo req=true
+    $("#formulario [req=true]").each(
+        function(){
+            if($(this).val().length < 1){
+                canSubmit = false;
+                //messages += "<li>" + $(this).attr("label") + " é obrigatório</li>";
+                $(this).css('border-color', '#F00');
+            }
+            else{
+                $(this).css('border-color','gray');
+            }       
+            
+        }
+    );
+    
+        if(canSubmit == true) document.formulario.submit();
+        else e.preventDefault();    
+    }
+</script>
+</head>
+
+<body>
+    <div class="topo_geral">
+        <center>Acadetech suporte: (0XX) 3676-7585</center>
+    </div>
+
+    <div class="geral">
+        <div class="separador"></div>
+
+        <div class="login espaco_campo">
+            <div class="aviso">
+                <b>Seja bem-vindo.</b><br><br>
+            </div>
+      
+            <form id="formulario" name="formulario" method="post" action="<?=$PATH_PAI; ?>index.php">
+                Email<br />
+                <input name="email" id="email" type="text" size="100" class="input"/><br />
+                
+                <div class="espaco_campo">Senha</div>
+                <input name="senha" id="senha" type="password" size="16" class="input"/><br />
+
+                <?php if($sk['MSG']) { ?>
+                    <?php  echo "<br>".$sk['MSG']."<br>"; ?>
+                <?php } ?>
+
+                <table width="100%">
+                    <tr>
+                        <td width="100px">
+                            <a href="javascript:validarForm();" name="submit" id="submit"><img src="images/Login_03.png" width="91" height="35" border="0" /></a>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </form>
+        </div>  
+    </div>
+      
+    <div class="geral">
+        <?php  include_once("rodape.php"); ?>
+    </div>
+</body>
+</html>

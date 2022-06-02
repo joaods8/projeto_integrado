@@ -1,0 +1,40 @@
+
+    <div class="geral">
+    	<div style="height: 100px;">
+	        	<div class="dropdown6 float">
+				<a href="<?=$PATH_PAI; ?>principal.php" class="dropbtn">Principal</a>
+			</div>
+
+			<? if($_SESSION['tipo'] == "ADM0564") { ?>
+				<div class="dropdown6 float">
+					<a href="<?=$PATH_PAI; ?>funcionarios.php" class="dropbtn">Funcionários</a>
+				</div>
+			<? } ?>
+
+			<div class="dropdown6 float">
+				<a href="<?=$PATH_PAI; ?>alunos.php" class="dropbtn">Alunos</a>
+			</div>
+
+			<? if($_SESSION['tipo'] == "ADM0564") { ?>
+				<div class="dropdown2 float">
+				  <button class="dropbtn">Relatórios</button>
+				  <div class="dropdown2-content">
+				  	<a href="<?=$PATH_PAI; ?>aberto.php">Pagamentos em aberto</a>
+				  	<a href="<?=$PATH_PAI; ?>desativados.php">Alunos desligados</a>
+				  </div>
+				</div>
+			<? } ?>
+		        
+			<div class="dropdown4 float">
+				<a href="<?=$PATH_PAI; ?>logout.php" class="dropbtn">Sair</a>
+			</div>
+
+	        <div class="limpa"></div>
+	    </div>
+		<div class="limpa"></div>
+
+        <div class="separador"></div>
+        Bem vindo <? echo $_SESSION['nome']; ?>
+        <div class="separador"></div>
+    </div>
+</div>
